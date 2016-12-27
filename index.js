@@ -7,7 +7,7 @@ var multer = require("multer");
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.set("views", "./views");
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
 
 var config = {
     user: 'nfoelcoksqmjso', //env var: PGUSER

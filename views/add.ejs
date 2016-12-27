@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>ADD NEW VIDEO - VIMEO VIDEOS SHOWCASE</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../images/favicon_dark.ico">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../icons/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-10 col-md-push-1">
+
+                <form action="add" method="POST" role="form" enctype="multipart/form-data">
+                    <legend>Thêm Video</legend>
+                
+                    <div class="form-group">
+                        <label for="">Tiêu Đề</label>
+                        <input type="text" class="form-control" id="tieude" name="tieude" placeholder="Tiêu đề của video">
+                        <label for="">Mô Tả</label>
+                        <input type="text" class="form-control" id="mota" name="mota" placeholder="Mô tả của video">
+                        <label for="">Key</label>
+                        <input type="text" class="form-control" id="key" name="key" placeholder="id của video trên Vimeo">
+                        <label for="">Image</label>
+                        <input type="file" class="form-control" id="image" name="image" placeholder="Hình ảnh của video">
+                    </div>
+                
+                    
+                
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

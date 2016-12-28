@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>LOGIN - VIMEO VIDEOS SHOWCASE</title>
+</head>
+
+<body>
+    
+    <div class="container-fluid">
+        <div class="col-md-6">
+            
+            <form action="login" method="POST" role="form">
+                <legend>Đăng Nhập</legend>
+            
+                <div class="form-group">
+                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <span class="input-group-addon"><i class="fa fa-lock fa" aria-hidden="true"></i></span>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                </div>
+            
+                <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Đăng Nhập</button>
+            </form>
+            
+        </div>
+        <div class="col-md-6">
+            
+            <form action="register" method="POST" role="form">
+                <legend>Đăng Ký</legend>
+            
+                <div class="form-group">
+                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                    <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <span class="input-group-addon"><i class="fa fa-lock fa" aria-hidden="true"></i></span>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <span class="input-group-addon"><i class="fa fa-lock fa" aria-hidden="true"></i></span>
+                    <input type="password" class="form-control" id="comfirmPassword" name="comfirmPassword" placeholder="Comfirm Password">
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Đăng Ký</button>
+            </form>
+            
+        </div>
+    </div>
+    
+</body>
+
+</html>

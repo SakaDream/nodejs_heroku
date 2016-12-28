@@ -207,7 +207,5 @@ app.post("/videos/edit/:id" , function(req, res){
 // });
 
 app.get("/login", function(req, res){
-    var hidden = req.app.get("hidden");
-    hidden = 'style="display: none"';
-    res.render("login", hidden);
+    res.render("login");
 });

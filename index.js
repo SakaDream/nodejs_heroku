@@ -11,10 +11,10 @@ var crypto = require("crypto");
 app.use(express.static("public"));
 app.use(bodyParser.json());
 app.use(validator());
-app.use(session({secret: 'user', saveUninitialized: false, resave: false}));
+app.use(session({ secret: 'user', saveUninitialized: false, resave: false }));
 app.set("view engine", "ejs");
 app.set("views", "./views");
-app.set("hidden" , "hidden");
+app.set("hidden", "hidden");
 app.listen(process.env.PORT || 3000);
 
 var config = {
@@ -79,7 +79,7 @@ app.get("/videos/list", function (req, res) {
 });
 
 //post method in delete return to list (login coming soon)
-app.get("/videos/delete/:id",function(req, res){
+app.get("/videos/delete/:id", function (req, res) {
     res.redirect("../list");
 });
 
@@ -158,7 +158,7 @@ app.get("/videos/edit/:id", function (req, res) {
 });
 
 //post method in edit return to list (login coming soon)
-app.post("/videos/edit/:id" , function(req, res){
+app.post("/videos/edit/:id", function (req, res) {
     res.redirect("../list");
 });
 
@@ -206,7 +206,7 @@ app.post("/videos/edit/:id" , function(req, res){
 //     })
 // });
 
-app.get("/login", function(req, res){
+app.get("/login", function (req, res) {
     var hidden = 1;
-    res.render("login" , {hidden});
+    res.render("login", { hidden });
 });

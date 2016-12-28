@@ -3,16 +3,16 @@ from sys import argv
 n = len(argv)
 
 def help():
-    print("Welcome to PostgreSQL database exporter!\n")
-    print("List of arguments:\n")
-    print("h: display help content")
-    print("d: default setting (username = postgres, db = MerryChristmas, fn = export.sql)")
-    print("c <username> <database> <fileName> : Custom setting")
+    print "Welcome to PostgreSQL database exporter!"
+    print "List of arguments:"
+    print "h: display help content"
+    print "d: default setting (username = postgres, db = MerryChristmas, fn = export.sql)"
+    print "c <username> <database> <fileName> : Custom setting"
 
-def export():
+def exportDefault():
     os.system("pg_dump -U postgres MerryChristmas > export.sql")
 
-def export(username, database, fileName):
+def exportCustom(username, database, fileName):
     os.system("pg_dump -U " + username + " " + database + " > " + fileName)
 
 if n == 1:
@@ -23,11 +23,11 @@ if n >= 2:
     if option == "h":
         help()
     elif option == "d":
-        os.system("pg_dump -U postgres MerryChristmas > export.sql")
+        exportDefault()
     elif option == "c":
         if n == 2:
-            print("Please add more arguments!")
+            print "Please add more arguments!"
         else:
-            os.system("pg_dump -U " + argv[2] + " " + argv[3] + " > " + argv[4])
+            exportCustom(argv[2], argv[3], argv[4])
     else:
-        print("Function not found!")
+        print "Function not found!"

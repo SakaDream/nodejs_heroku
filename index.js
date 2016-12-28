@@ -3,8 +3,15 @@ var app = express();
 var pg = require("pg");
 var bodyParser = require("body-parser");
 var multer = require("multer");
+var validator = require("express-validator");
+var session = require("express-session");
+var cookie = require("cookie-parser");
+var crypto = require("crypto");
 
 app.use(express.static("public"));
+app.use(bodyParser.json());
+app.use(validator());
+app.use(session({secret: 'user', saveUninitialized: false, resave: false}));
 app.set("view engine", "ejs");
 app.set("views", "./views");
 app.listen(process.env.PORT || 3000);
@@ -31,6 +38,8 @@ var storage = multer.diskStorage({
     }
 });
 var upload = multer({ storage: storage }).single('image');
+
+var md5 = crypto.createHash("md5");
 
 app.get("/", function (req, res) {
     pool.connect(function (err, client, done) {

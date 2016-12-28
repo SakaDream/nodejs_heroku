@@ -204,3 +204,7 @@ app.post("/videos/edit/:id" , function(req, res){
 //         // Everything went fine
 //     })
 // });
+
+app.get("/login", function(req, res){
+    res.render("login");
+});

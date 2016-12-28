@@ -14,6 +14,7 @@ app.use(validator());
 app.use(session({secret: 'user', saveUninitialized: false, resave: false}));
 app.set("view engine", "ejs");
 app.set("views", "./views");
+app.set("hidden" , "hidden");
 app.listen(process.env.PORT || 3000);
 
 var config = {
@@ -206,6 +207,7 @@ app.post("/videos/edit/:id" , function(req, res){
 // });
 
 app.get("/login", function(req, res){
-    var hidden = 'style="display: none;"';
+    var hidden = req.app.get("hidden");
+    hidden = 'style="display: none"';
     res.render("login", hidden);
 });

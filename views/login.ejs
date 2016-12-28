@@ -38,7 +38,9 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Đăng Nhập</button>
-                <div class="alert alert-danger" role="alert"><strong>Error!</strong> Error will show here</div>
+                <% if(hiddenLG == 0) { %>
+                    <div class="alert alert-danger" role="alert"><strong>Error!</strong> Error will show here</div>
+                <% } %>
             </form>
 
         </div>
@@ -81,9 +83,9 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Đăng Ký</button>
-                <% if(hidden == 1) { %>
-                    <div class="alert alert-danger" role="alert"><%= hidden %></div>
-                    <% } %>
+                <% if(hiddenSU == 0) { %>
+                    <div class="alert alert-danger" role="alert"><strong>Error!</strong> Error will show here</div>
+                <% } %>
             </form>
 
         </div>

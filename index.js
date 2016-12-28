@@ -14,6 +14,7 @@ app.use(validator());
 app.use(session({secret: 'user', saveUninitialized: false, resave: false}));
 app.set("view engine", "ejs");
 app.set("views", "./views");
+app.set("hidden" , "hidden");
 app.listen(process.env.PORT || 3000);
 
 var config = {

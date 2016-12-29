@@ -213,22 +213,42 @@ app.get("/login", function (req, res) {
 });
 
 app.post("/login", urlencodedParser, function (req, res) {
-    var username = req.body.username;
-    var password = req.body.password;
-
     var hiddenLG = 0;
     var hiddenSU = 1;
     var error = '';
 
+    var username = req.body.username;
+    var password = req.body.password;
+
     var crypt = md5.update(password);
     var passCrypt = crypt.digest('hex');
-    var passVal = '202cb962ac59075b964b07152d234b70';
-    if (passCrypt.toString().trim() === passVal.toString().trim()) {
-        res.send("Login successful!");
-    } else {
-        error = 'Password not match! Please try agian';
-        res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
-    }
+
+    pool.connect(function (err, client, done) {
+        if (err) {
+            return console.error('error fetching client from pool', err);
+        }
+        client.query("SELECT \"PASSWORD \" FROM \"USERS\" WHERE \"USERNAME\" LIKE '" + username + "'", function (err, result) {
+            //call `done()` to release the client back to the pool
+            done();
+
+            if (err) {
+                return console.error('error running query', err);
+            }
+            var password = result.rows[0];
+            if (password == undefined) {
+                error = 'Username không tồn tại';
+                res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
+            } else {
+                var crypt = md5.update(password);
+                var passCrypt = crypt.digest('hex');
+
+                if(password.toString().trim() === passCrypt.toString().trim()) {
+                    res.redirect("/videos/list");
+                }
+            }
+            //output: 1
+        });
+    });
 });
 
 app.post("/register", urlencodedParser, function (req, res) {
@@ -252,7 +272,7 @@ app.post("/register", urlencodedParser, function (req, res) {
 
         var crypt = md5.update(password);
         var passCrypt = crypt.digest('hex');
-        
+
         pool.connect(function (err, client, done) {
             if (err) {
                 return console.error('error fetching client from pool', err);

@@ -216,32 +216,37 @@ app.post("/login", urlencodedParser, function (req, res) {
     var username = req.body.username;
     var password = req.body.password;
 
+    var hiddenLG = 0;
+    var hiddenSU = 1;
+    var error = '';
+
     var crypt = md5.update(password);
     var passCrypt = crypt.digest('hex');
     var passVal = '202cb962ac59075b964b07152d234b70';
-    if(passCrypt.toString().trim() === passVal.toString().trim()) {
+    if (passCrypt.toString().trim() === passVal.toString().trim()) {
         res.send("Login successful!");
     } else {
-        var hiddenLG = 0;
-        var hiddenSU = 1;
-        var error = 'Password not match! Please try agian';
+        error = 'Password not match! Please try agian';
         res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
     }
 });
 
 app.post("/register", urlencodedParser, function (req, res) {
-    var username = req.body.username;
-    var email = req.body.email;
-    var password = req.body.password;
-    var comfirmPassword = req.body.comfirmPassword;
+    var hiddenLG = 1;
+    var hiddenSU = 0;
+    var error = '';
 
-    if (password.toString().trim() === comfirmPassword.toString().trim()) {
+    req.check('email' , 'Email không hợp lệ').isEmail();
+    req.check('password' , 'Password phải trên 6 kí tự').isLength({min: 6});
+    req.check('comfirmPassword' , 'Xác thực password không đúng').equals(req.body.password);
+
+    var errors = req.validationErrors();
+
+    if(errors) {
+        error = errors[1].mgs;
+        res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
+    } else {
         var crypt = md5.update(password); //123
         res.send(crypt.digest('hex')); //202cb962ac59075b964b07152d234b70
-    } else {
-        var hiddenLG = 1;
-        var hiddenSU = 0;
-        var error = 'comfirm password not match!';
-        res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
     }
 });

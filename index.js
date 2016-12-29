@@ -227,7 +227,7 @@ app.post("/register", urlencodedParser, function (req, res) {
 
     if (password.toString().trim() === comfirmPassword.toString().trim()) {
         var crypt = md5.update(password);
-        console.log(crypt);
+        res.send(crypt);
     } else {
         var hiddenLG = 1;
         var hiddenSU = 0;

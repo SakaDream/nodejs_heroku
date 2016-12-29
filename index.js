@@ -220,6 +220,8 @@ app.post("/login", urlencodedParser, function (req, res) {
     var username = req.body.username;
     var password = req.body.password;
 
+    return res.send(username + " " + password);
+
     pool.connect(function (err, client, done) {
         if (err) {
             return console.error('error fetching client from pool', err);
@@ -239,8 +241,11 @@ app.post("/login", urlencodedParser, function (req, res) {
                 var crypt = md5.update(password);
                 var passCrypt = crypt.digest('hex');
 
-                if(password.toString().trim() === passCrypt.toString().trim()) {
+                if (password.toString().trim() === passCrypt.toString().trim()) {
                     res.redirect("/videos/list");
+                } else {
+                    error = 'Mật khẩu không đúng';
+                    res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
                 }
             }
             //output: 1

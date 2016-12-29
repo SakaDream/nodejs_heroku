@@ -216,9 +216,10 @@ app.post("/login", urlencodedParser, function (req, res) {
     var username = req.body.username;
     var password = req.body.password;
 
-    var cryptPass = md5.update(password);
+    var crypt = md5.update(password);
+    var passCrypt = crypt.digest('hex');
     var passVal = '202cb962ac59075b964b07152d234b70';
-    if(cryptPass.toString().trim() === passVal.toString().trim()) {
+    if(passCrypt.toString().trim() === passVal.toString().trim()) {
         res.send("Login successful!");
     } else {
         var hiddenLG = 0;

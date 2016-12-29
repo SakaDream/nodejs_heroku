@@ -231,7 +231,7 @@ app.post("/login", urlencodedParser, function (req, res) {
             var Rpassword = result.rows[0].PASSWORD;
             if (password == undefined) {
                 error = 'Username không tồn tại';
-                res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
+                return res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
             } else {
                 var passCrypt = require('crypto').createHash('md5').update(password).digest('hex');
 

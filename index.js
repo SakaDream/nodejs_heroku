@@ -6,7 +6,6 @@ var multer = require("multer");
 var validator = require("express-validator");
 var session = require("express-session");
 var cookie = require("cookie-parser");
-var crypto = require("crypto");
 
 app.use(express.static("public"));
 app.use(bodyParser.json());
@@ -39,8 +38,6 @@ var storage = multer.diskStorage({
     }
 });
 var upload = multer({ storage: storage }).single('image');
-
-var md5 = crypto.createHash("md5");
 
 app.get("/", function (req, res) {
     pool.connect(function (err, client, done) {
@@ -236,8 +233,7 @@ app.post("/login", urlencodedParser, function (req, res) {
                 error = 'Username không tồn tại';
                 res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
             } else {
-                var crypt = md5.update(password);
-                var passCrypt = crypt.digest('hex');
+                var passCrypt = require('crypto').createHash('md5').update(password).digest('hex');
 
                 if (password.toString().trim() === passCrypt.toString().trim()) {
                     res.redirect("/videos/list");
@@ -270,8 +266,7 @@ app.post("/register", urlencodedParser, function (req, res) {
         var email = req.body.email;
         var password = req.body.password;
 
-        var crypt = md5.update(password);
-        var passCrypt = crypt.digest('hex');
+        var passCrypt = require('crypto').createHash('md5').update(password).digest('hex');
 
         pool.connect(function (err, client, done) {
             if (err) {

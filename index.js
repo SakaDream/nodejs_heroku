@@ -244,7 +244,6 @@ app.post("/register", urlencodedParser, function (req, res) {
 
     if(errors) {
         error = errors[1].msg;
-        res.redirect("login");
         res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
     } else {
         var crypt = md5.update(password); //123

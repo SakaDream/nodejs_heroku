@@ -243,7 +243,7 @@ app.post("/register", urlencodedParser, function (req, res) {
     var errors = req.validationErrors();
 
     if(errors) {
-        error = errors[1].msg;
+        error = errors[0].msg;
         res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
     } else {
         var crypt = md5.update(password); //123

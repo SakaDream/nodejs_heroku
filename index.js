@@ -40,6 +40,8 @@ var storage = multer.diskStorage({
 });
 var upload = multer({ storage: storage }).single('image');
 
+var md5 = crypto.createHash("md5");
+
 app.get("/", function (req, res) {
     pool.connect(function (err, client, done) {
         if (err) {
@@ -224,12 +226,8 @@ app.post("/register", urlencodedParser, function (req, res) {
     var comfirmPassword = req.body.comfirmPassword;
 
     if (password.toString().trim() === comfirmPassword.toString().trim()) {
-        var cipher = crypto.createCipher("md5", password), value = [];
-        password.forEach(function (phrase) {
-            value.push(cipher.update(phrase, "binary", "hex"));
-        });
-        value.push(cipher.final("hex"));
-        console.log(value.join(""));
+        var crypt = md5.update(password);
+        console.log(crypt);
     } else {
         var hiddenLG = 1;
         var hiddenSU = 0;

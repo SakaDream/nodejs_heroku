@@ -228,14 +228,14 @@ app.post("/login", urlencodedParser, function (req, res) {
             if (err) {
                 return console.error('error running query', err);
             }
-            var password = result.rows[0].PASSWORD;
+            var Rpassword = result.rows[0].PASSWORD;
             if (password == undefined) {
                 error = 'Username không tồn tại';
                 res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
             } else {
                 var passCrypt = require('crypto').createHash('md5').update(password).digest('hex');
 
-                if (password.toString().trim() === passCrypt.toString().trim()) {
+                if (Rpassword.toString().trim() === passCrypt.toString().trim()) {
                     res.redirect("/videos/list");
                 } else {
                     error = 'Mật khẩu không đúng';

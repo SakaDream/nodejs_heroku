@@ -227,7 +227,7 @@ app.post("/login", urlencodedParser, function (req, res) {
         if (err) {
             return console.error('error fetching client from pool', err);
         }
-        client.query("SELECT \"PASSWORD \" FROM \"USERS\" WHERE \"USERNAME\" LIKE '" + username + "'", function (err, result) {
+        client.query("SELECT \"PASSWORD\" FROM \"USERS\" WHERE \"USERNAME\" LIKE '" + username + "'", function (err, result) {
             //call `done()` to release the client back to the pool
             done();
 

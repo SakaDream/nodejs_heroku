@@ -226,7 +226,7 @@ app.post("/register", urlencodedParser, function (req, res) {
     if (password.toString().trim() === comfirmPassword.toString().trim()) {
         var cipher = crypto.createCipher("md5", password), value = [];
         password.forEach(function (phrase) {
-            value.push(cipher.update(phrase, "binary", "hex");
+            value.push(cipher.update(phrase, "binary", "hex"));
         });
         value.push(cipher.final("hex"));
         console.log(value.join(""));

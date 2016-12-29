@@ -257,7 +257,7 @@ app.post("/register", urlencodedParser, function (req, res) {
             if (err) {
                 return console.error('error fetching client from pool', err);
             }
-            client.query("INSERT INTO \"USERS\" (\"USERNAME\" , \"EMAIL\" , \"PASSWORD\" , \"ROLEID\") VALUES ('" + username + "' , '" + email + "' , '" + passCrypt + "' , " + 1 + ")", function (err, result) {
+            client.query("INSERT INTO \"USERS\" (\"USERNAME\" , \"EMAIL\" , \"PASSWORD\") VALUES ('" + username + "' , '" + email + "' , '" + passCrypt + "')", function (err, result) {
                 //call `done()` to release the client back to the pool
                 done();
 

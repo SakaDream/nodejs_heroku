@@ -276,7 +276,7 @@ app.post("/register", urlencodedParser, function (req, res) {
                     return console.error('error running query', err);
                 }
                 for (var i = 0; i < result.rows.length; i++) {
-                    if (result.rows[i].toString().trim() === username.toString().trim()) {
+                    if (result.rows[i].USERNAME.toString().trim() === username.toString().trim()) {
                         error = 'Username đã trùng';
                         return res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
                     }

@@ -246,6 +246,10 @@ app.post("/register", urlencodedParser, function (req, res) {
         error = errors[0].msg;
         res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
     } else {
+        var username = req.body.username;
+        var email = req.body.email;
+        var password = req.body.password;
+        
         var crypt = md5.update(password); //123
         res.send(crypt.digest('hex')); //202cb962ac59075b964b07152d234b70
     }

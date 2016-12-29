@@ -278,8 +278,8 @@ app.post("/register", urlencodedParser, function (req, res) {
                 }
                 for (var i = 0; i < result.rows.length; i++) {
                     if (result.rows[i].USERNAME.toString().trim() === username.toString().trim()) {
-                        error = 'Username đã trùng';
-                        res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
+                        // error = 'Username đã trùng';
+                        // res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
                         flag = 1;
                         res.send(flag);
                     }

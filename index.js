@@ -208,6 +208,6 @@ app.post("/videos/edit/:id", function (req, res) {
 
 app.get("/login", function (req, res) {
     var hiddenLG = 0;
-    var hiddenSU = 1;
+    var hiddenSU = 0;
     res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU });
 });

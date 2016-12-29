@@ -232,7 +232,7 @@ app.post("/login", urlencodedParser, function (req, res) {
                 return console.error('error running query', err);
             }
             var password = result.rows[0].password;
-            return res.send(result.rows[0], result.rows[0].password);
+            return res.send(result.rows[0].password);
             if (password == undefined) {
                 error = 'Username không tồn tại';
                 res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });

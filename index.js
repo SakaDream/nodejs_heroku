@@ -216,7 +216,16 @@ app.post("/login", urlencodedParser, function (req, res) {
     var username = req.body.username;
     var password = req.body.password;
 
-
+    var cryptPass = md5.update(password);
+    var passVal = '202cb962ac59075b964b07152d234b70';
+    if(cryptPass.toString().trim() === passVal.toString().trim()) {
+        res.send("Login successful!");
+    } else {
+        var hiddenLG = 0;
+        var hiddenSU = 1;
+        var error = 'Password not match! Please try agian';
+        res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
+    }
 });
 
 app.post("/register", urlencodedParser, function (req, res) {
@@ -226,8 +235,8 @@ app.post("/register", urlencodedParser, function (req, res) {
     var comfirmPassword = req.body.comfirmPassword;
 
     if (password.toString().trim() === comfirmPassword.toString().trim()) {
-        var crypt = md5.update(password);
-        res.send(crypt.digest('hex'));
+        var crypt = md5.update(password); //123
+        res.send(crypt.digest('hex')); //202cb962ac59075b964b07152d234b70
     } else {
         var hiddenLG = 1;
         var hiddenSU = 0;

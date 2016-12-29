@@ -251,6 +251,7 @@ app.post("/register", urlencodedParser, function (req, res) {
     var hiddenLG = 1;
     var hiddenSU = 0;
     var error = '';
+    var flag = 0;
 
     req.check('email', 'Email không hợp lệ').isEmail();
     req.check('password', 'Password phải trên 6 kí tự').isLength({ min: 6 });
@@ -279,31 +280,34 @@ app.post("/register", urlencodedParser, function (req, res) {
                     if (result.rows[i].USERNAME.toString().trim() === username.toString().trim()) {
                         error = 'Username đã trùng';
                         return res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
+                        flag = 1;
                     }
                 }
                 //output: 1
             });
         });
 
-        var email = req.body.email;
-        var password = req.body.password;
+        if (flag == 0) {
+            var email = req.body.email;
+            var password = req.body.password;
 
-        var passCrypt = require('crypto').createHash('md5').update(password).digest('hex');
+            var passCrypt = require('crypto').createHash('md5').update(password).digest('hex');
 
-        pool.connect(function (err, client, done) {
-            if (err) {
-                return console.error('error fetching client from pool', err);
-            }
-            client.query("INSERT INTO \"USERS\" (\"USERNAME\" , \"EMAIL\" , \"PASSWORD\" , \"ROLEID\") VALUES ('" + username + "' , '" + email + "' , '" + passCrypt + "' , " + 2 + ")", function (err, result) {
-                //call `done()` to release the client back to the pool
-                done();
-
+            pool.connect(function (err, client, done) {
                 if (err) {
-                    return console.error('error running query', err);
+                    return console.error('error fetching client from pool', err);
                 }
-                return res.redirect("/videos/list");
-                //output: 1
+                client.query("INSERT INTO \"USERS\" (\"USERNAME\" , \"EMAIL\" , \"PASSWORD\" , \"ROLEID\") VALUES ('" + username + "' , '" + email + "' , '" + passCrypt + "' , " + 2 + ")", function (err, result) {
+                    //call `done()` to release the client back to the pool
+                    done();
+
+                    if (err) {
+                        return console.error('error running query', err);
+                    }
+                    return res.redirect("/videos/list");
+                    //output: 1
+                });
             });
-        });
+        }
     }
 });

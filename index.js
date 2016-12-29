@@ -40,8 +40,6 @@ var storage = multer.diskStorage({
 });
 var upload = multer({ storage: storage }).single('image');
 
-var md5 = crypto.createHash("md5");
-
 app.get("/", function (req, res) {
     pool.connect(function (err, client, done) {
         if (err) {
@@ -207,7 +205,35 @@ app.post("/videos/edit/:id", function (req, res) {
 // });
 
 app.get("/login", function (req, res) {
-    var hiddenLG = 0;
-    var hiddenSU = 0;
+    var hiddenLG = 1;
+    var hiddenSU = 1;
     res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU });
+});
+
+app.post("/login", urlencodedParser, function (req, res) {
+    var username = req.body.username;
+    var password = req.body.password;
+
+
+});
+
+app.post("/register", urlencodedParser, function (req, res) {
+    var username = req.body.username;
+    var email = req.body.email;
+    var password = req.body.password;
+    var comfirmPassword = req.body.comfirmPassword;
+
+    if (password.toString().trim() === comfirmPassword.toString().trim()) {
+        var cipher = crypto.createCipher("md5", password), value = [];
+        password.forEach(function (phrase) {
+            value.push(cipher.update(phrase, "binary", "hex");
+        });
+        value.push(cipher.final("hex"));
+        console.log(value.join(""));
+    } else {
+        var hiddenLG = 1;
+        var hiddenSU = 0;
+        var error = 'comfirm password not match!';
+        res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
+    }
 });

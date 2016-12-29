@@ -39,7 +39,7 @@
 
                 <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Đăng Nhập</button>
                 <% if(hiddenLG == 0) { %>
-                    <div class="alert alert-danger" role="alert"><strong>Error!</strong> Error will show here</div>
+                    <div class="alert alert-danger" role="alert"><strong>Error! </strong><%= error %></div>
                 <% } %>
             </form>
 
@@ -84,7 +84,7 @@
 
                 <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Đăng Ký</button>
                 <% if(hiddenSU == 0) { %>
-                    <div class="alert alert-danger" role="alert"><strong>Error!</strong> Error will show here</div>
+                    <div class="alert alert-danger" role="alert"><strong>Error! </strong><%= error %></div>
                 <% } %>
             </form>
 

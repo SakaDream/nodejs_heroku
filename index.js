@@ -236,21 +236,37 @@ app.post("/register", urlencodedParser, function (req, res) {
     var hiddenSU = 0;
     var error = '';
 
-    req.check('email' , 'Email không hợp lệ').isEmail();
-    req.check('password' , 'Password phải trên 6 kí tự').isLength({min: 6});
-    req.check('comfirmPassword' , 'Xác thực password không đúng').equals(req.body.password);
+    req.check('email', 'Email không hợp lệ').isEmail();
+    req.check('password', 'Password phải trên 6 kí tự').isLength({ min: 6 });
+    req.check('comfirmPassword', 'Xác thực password không đúng').equals(req.body.password);
 
     var errors = req.validationErrors();
 
-    if(errors) {
+    if (errors) {
         error = errors[0].msg;
         res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
     } else {
         var username = req.body.username;
         var email = req.body.email;
         var password = req.body.password;
+
+        var crypt = md5.update(password);
+        var passCrypt = crypt.digest('hex');
         
-        var crypt = md5.update(password); //123
-        res.send(crypt.digest('hex')); //202cb962ac59075b964b07152d234b70
+        pool.connect(function (err, client, done) {
+            if (err) {
+                return console.error('error fetching client from pool', err);
+            }
+            client.query("INSERT INTO \"USER\" (\"USERNAME\" , \"EMAIL\" , \"PASSWORD\" , \"ROLEID\") VALUES ('" + username + "' , '" + email + "' , '" + passCrypt + "' , " + 1 + ")", function (err, result) {
+                //call `done()` to release the client back to the pool
+                done();
+
+                if (err) {
+                    return console.error('error running query', err);
+                }
+                res.redirect("/videos/list");
+                //output: 1
+            });
+        });
     }
 });

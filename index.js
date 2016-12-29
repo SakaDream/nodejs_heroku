@@ -236,10 +236,10 @@ app.post("/login", urlencodedParser, function (req, res) {
                 var passCrypt = require('crypto').createHash('md5').update(password).digest('hex');
 
                 if (Rpassword.toString().trim() === passCrypt.toString().trim()) {
-                    res.redirect("/videos/list");
+                    return res.redirect("/videos/list");
                 } else {
                     error = 'Mật khẩu không đúng';
-                    res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
+                    return res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
                 }
             }
             //output: 1
@@ -260,9 +260,31 @@ app.post("/register", urlencodedParser, function (req, res) {
 
     if (errors) {
         error = errors[0].msg;
-        res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
+        return res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
     } else {
         var username = req.body.username;
+
+        pool.connect(function (err, client, done) {
+            if (err) {
+                return console.error('error fetching client from pool', err);
+            }
+            client.query("SELECT \"USERNAME\" FROM \"USERS\"", function (err, result) {
+                //call `done()` to release the client back to the pool
+                done();
+
+                if (err) {
+                    return console.error('error running query', err);
+                }
+                for (var i = 0; i < result.rows.length; i++) {
+                    if (result.rows[i].toString().trim() === username.toString().trim()) {
+                        error = 'Username đã trùng';
+                        return res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
+                    }
+                }
+                //output: 1
+            });
+        });
+
         var email = req.body.email;
         var password = req.body.password;
 
@@ -279,7 +301,7 @@ app.post("/register", urlencodedParser, function (req, res) {
                 if (err) {
                     return console.error('error running query', err);
                 }
-                res.redirect("/videos/list");
+                return res.redirect("/videos/list");
                 //output: 1
             });
         });

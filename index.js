@@ -288,7 +288,7 @@ app.post("/register", urlencodedParser, function (req, res) {
         });
 
         if (flag == 0) {
-            res.send('true');
+            res.send(flag);
 
             // var email = req.body.email;
             // var password = req.body.password;

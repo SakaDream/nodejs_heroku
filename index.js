@@ -252,7 +252,6 @@ app.post("/register", urlencodedParser, function (req, res) {
     var hiddenSU = 0;
     var error = '';
     var flag = 0;
-    res.send(flag);
 
     req.check('email', 'Email không hợp lệ').isEmail();
     req.check('password', 'Password phải trên 6 kí tự').isLength({ min: 6 });
@@ -279,10 +278,9 @@ app.post("/register", urlencodedParser, function (req, res) {
                 }
                 for (var i = 0; i < result.rows.length; i++) {
                     if (result.rows[i].USERNAME.toString().trim() === username.toString().trim()) {
-                        // error = 'Username đã trùng';
-                        // res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
-                        // flag = 1;
-                        // res.send(flag);
+                        flag = 1;
+                        error = 'Username đã trùng';
+                        res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
                     }
                 }
                 //output: 1

@@ -287,27 +287,27 @@ app.post("/register", urlencodedParser, function (req, res) {
             });
         });
 
-        // if (flag == 0) {
-        //     var email = req.body.email;
-        //     var password = req.body.password;
+        if (flag == 0) {
+            var email = req.body.email;
+            var password = req.body.password;
 
-        //     var passCrypt = require('crypto').createHash('md5').update(password).digest('hex');
+            var passCrypt = require('crypto').createHash('md5').update(password).digest('hex');
 
-        //     pool.connect(function (err, client, done) {
-        //         if (err) {
-        //             return console.error('error fetching client from pool', err);
-        //         }
-        //         client.query("INSERT INTO \"USERS\" (\"USERNAME\" , \"EMAIL\" , \"PASSWORD\" , \"ROLEID\") VALUES ('" + username + "' , '" + email + "' , '" + passCrypt + "' , " + 2 + ")", function (err, result) {
-        //             //call `done()` to release the client back to the pool
-        //             done();
+            pool.connect(function (err, client, done) {
+                if (err) {
+                    return console.error('error fetching client from pool', err);
+                }
+                client.query("INSERT INTO \"USERS\" (\"USERNAME\" , \"EMAIL\" , \"PASSWORD\" , \"ROLEID\") VALUES ('" + username + "' , '" + email + "' , '" + passCrypt + "' , " + 2 + ")", function (err, result) {
+                    //call `done()` to release the client back to the pool
+                    done();
 
-        //             if (err) {
-        //                 return console.error('error running query', err);
-        //             }
-        //             return res.redirect("/videos/list");
-        //             //output: 1
-        //         });
-        //     });
-        // }
+                    if (err) {
+                        return console.error('error running query', err);
+                    }
+                    return res.redirect("/videos/list");
+                    //output: 1
+                });
+            });
+        }
     }
 });

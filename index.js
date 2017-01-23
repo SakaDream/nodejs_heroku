@@ -59,7 +59,7 @@ app.get("/", function (req, res) {
 
 app.get("/videos/list", function (req, res) {
     var properties = {
-        disabled: "disabled",
+        disabled: "disable-link",
         name: "view",
         icon: "fa fa-eye"
     }

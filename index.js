@@ -63,11 +63,11 @@ app.get("/videos/list", function (req, res) {
         name: "view",
         icon: "fa fa-eye"
     }
-    if(req.session.roleid === 1) {
+    if(req.session.roleid == 1) {
         properties.disabled = "";
         properties.name = "edit";
         properties.icon = "fa fa-edit";
-    } else if(req.session.roleid === undefined) {
+    } else if(req.session.roleid == undefined) {
         res.send("roleid is undefined!");
     } else {
         res.send("Output: " + req.session.roleid);

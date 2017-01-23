@@ -1,55 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <title>EDIT VIDEO - VIMEO VIDEOS SHOWCASE</title>
-    <link rel="shortcut icon" type="image/x-icon" href="/images/favicon_dark.ico">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../icons/css/font-awesome.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-
-<body>
-
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-10 col-md-push-1">
-
-                <form action="edit" method="POST" role="form" enctype="multipart/form-data">
-                    <legend>Chỉnh Sửa Video</legend>
-                
-                    <div class="form-group">
-                        <input type="hidden" id="id" name="id" value="<%= data.ID %>">
-                        <label for="">Tiêu Đề</label>
-                        <input type="text" class="form-control" id="tieude" name="tieude" value="<%= data.TIEUDE %>" placeholder="Tiêu đề của video"><br>
-                        <label for="">Mô Tả</label>
-                        <input type="text" class="form-control" id="mota" name="mota" value="<%= data.MOTA %>" placeholder="Mô tả của video"><br>
-                        <label for="">Key</label>
-                        <input type="text" class="form-control" id="key" name="key" value="<%= data.KEY %>" placeholder="id của video trên Vimeo"><br>
-                        <div class="form-group row">
-                            <div class="col-md-6">
-                                <label for="" class="btn btn-default btn-file">Ảnh Cũ:</label><br>
-                                <img width="150px" src="/upload/<%= data.IMAGE %>" alt="">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="" class="btn btn-default btn-file">Ảnh Mới:</label><br>
-                                <input type="file" class="form-control" id="image" name="image" placeholder="Ảnh của video">
+    <head>
+        <title>EDIT VIDEO - VIMEO VIDEOS SHOWCASE</title>
+        <link rel="shortcut icon" type="image/x-icon" href="/images/favicon_dark.ico">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../icons/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-10 col-md-push-1">
+                    <form action="edit" method="POST" role="form" enctype="multipart/form-data">
+                        <legend>Chỉnh Sửa Video</legend>
+                        <div class="form-group">
+                            <input type="hidden" id="id" name="id" value="<%= data.ID %>">
+                            <label for="">Tiêu Đề</label>
+                            <input type="text" class="form-control" id="tieude" name="tieude" value="<%= data.TIEUDE %>" placeholder="Tiêu đề của video"><br>
+                            <label for="">Mô Tả</label>
+                            <input type="text" class="form-control" id="mota" name="mota" value="<%= data.MOTA %>" placeholder="Mô tả của video"><br>
+                            <label for="">Key</label>
+                            <input type="text" class="form-control" id="key" name="key" value="<%= data.KEY %>" placeholder="id của video trên Vimeo"><br>
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <label for="" class="btn btn-default btn-file">Ảnh Cũ:</label><br>
+                                    <img width="150px" src="/upload/<%= data.IMAGE %>" alt="">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="" class="btn btn-default btn-file">Ảnh Mới:</label><br>
+                                    <input type="file" class="form-control" id="image" name="image" placeholder="Ảnh của video">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                
-                    
-                
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-                
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-
-</body>
-
+    </body>
 </html>

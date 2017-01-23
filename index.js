@@ -84,66 +84,56 @@ app.get("/videos/list", function (req, res) {
     });
 });
 
-//post method in delete return to list (login coming soon)
 app.get("/videos/delete/:id", function (req, res) {
-    res.redirect("../list");
+    pool.connect(function (err, client, done) {
+        if (err) {
+            return console.error('error fetching client from pool', err);
+        }
+        client.query('DELETE FROM "VIDEOS" WHERE "ID" = ' + req.params.id, function (err, result) {
+            //call `done()` to release the client back to the pool
+            done();
+
+            if (err) {
+                return console.error('error running query', err);
+            }
+            res.redirect("../list");
+            //output: 1
+        });
+    });
 });
-
-// app.get("/videos/delete/:id", function (req, res) {
-//     pool.connect(function (err, client, done) {
-//         if (err) {
-//             return console.error('error fetching client from pool', err);
-//         }
-//         client.query('DELETE FROM "VIDEOS" WHERE "ID" = ' + req.params.id, function (err, result) {
-//             //call `done()` to release the client back to the pool
-//             done();
-
-//             if (err) {
-//                 return console.error('error running query', err);
-//             }
-//             res.redirect("../list");
-//             //output: 1
-//         });
-//     });
-// });
 
 app.get("/videos/add", function (req, res) {
     res.render("add");
 });
 
-//post method in add return to list (login coming soon)
-app.post("/videos/add", function (req, res) {
-    res.redirect("./list");
+app.post("/videos/add", urlencodedParser, function (req, res) {
+    upload(req, res, function (err) {
+        if (err) {
+            // An error occurred when uploading
+            res.send("Error when uploading file: " + err);
+        } else if (req.file == undefined) {
+            res.send("You must upload a picture");
+        } else {
+            pool.connect(function (err, client, done) {
+                if (err) {
+                    return console.error('error fetching client from pool', err);
+                }
+                client.query("INSERT INTO \"VIDEOS\" (\"TIEUDE\" , \"MOTA\" , \"KEY\" , \"IMAGE\") VALUES ('" + req.body.tieude + "','" + req.body.mota + "','" + req.body.key + "','" + req.file.originalname + "')", function (err, result) {
+                    //call `done()` to release the client back to the pool
+                    done();
+
+                    if (err) {
+                        return console.error('error running query', err);
+                    }
+                    res.redirect("./list");
+                    //output: 1
+                });
+            });
+        }
+
+        // Everything went fine
+    })
 });
-
-// app.post("/videos/add", urlencodedParser, function (req, res) {
-//     upload(req, res, function (err) {
-//         if (err) {
-//             // An error occurred when uploading
-//             res.send("Error when uploading file: " + err);
-//         } else if (req.file == undefined) {
-//             res.send("You must upload a picture");
-//         } else {
-//             pool.connect(function (err, client, done) {
-//                 if (err) {
-//                     return console.error('error fetching client from pool', err);
-//                 }
-//                 client.query("INSERT INTO \"VIDEOS\" (\"TIEUDE\" , \"MOTA\" , \"KEY\" , \"IMAGE\") VALUES ('" + req.body.tieude + "','" + req.body.mota + "','" + req.body.key + "','" + req.file.originalname + "')", function (err, result) {
-//                     //call `done()` to release the client back to the pool
-//                     done();
-
-//                     if (err) {
-//                         return console.error('error running query', err);
-//                     }
-//                     res.redirect("./list");
-//                     //output: 1
-//                 });
-//             });
-//         }
-
-//         // Everything went fine
-//     })
-// });
 
 app.get("/videos/edit/:id", function (req, res) {
     var properties = {

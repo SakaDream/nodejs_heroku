@@ -157,52 +157,49 @@ app.get("/videos/edit/:id", function (req, res) {
     });
 });
 
-//post method in edit return to list (login coming soon)
-
 app.post("/videos/edit/:id", urlencodedParser, function (req, res) {
     if (req.session.roleid === 1) {
-        // upload(req, res, function (err) {
-        //     if (err) {
-        //         // An error occurred when uploading
-        //         res.send("Error when uploading file: " + err);
-        //     } else if (req.file == undefined) {
-        //         console.log(req.body.tieude + " " + req.body.mota + " " + req.body.key + " " + req.body.id);
-        //         pool.connect(function (err, client, done) {
-        //             if (err) {
-        //                 return console.error('error fetching client from pool', err);
-        //             }
-        //             client.query("UPDATE \"VIDEOS\" SET \"TIEUDE\" = '" + req.body.tieude + "', \"MOTA\" = '" + req.body.mota + "', \"KEY\" = '" + req.body.key + "' WHERE \"ID\" = " + req.body.id, function (err, result) {
-        //                 //call `done()` to release the client back to the pool
-        //                 done();
+        upload(req, res, function (err) {
+            if (err) {
+                // An error occurred when uploading
+                res.send("Error when uploading file: " + err);
+            } else if (req.file == undefined) {
+                console.log(req.body.tieude + " " + req.body.mota + " " + req.body.key + " " + req.body.id);
+                pool.connect(function (err, client, done) {
+                    if (err) {
+                        return console.error('error fetching client from pool', err);
+                    }
+                    client.query("UPDATE \"VIDEOS\" SET \"TIEUDE\" = '" + req.body.tieude + "', \"MOTA\" = '" + req.body.mota + "', \"KEY\" = '" + req.body.key + "' WHERE \"ID\" = " + req.body.id, function (err, result) {
+                        //call `done()` to release the client back to the pool
+                        done();
 
-        //                 if (err) {
-        //                     return console.error('error running query', err);
-        //                 }
-        //                 res.redirect("../list");
-        //                 //output: 1
-        //             });
-        //         });
-        //     } else {
-        //         pool.connect(function (err, client, done) {
-        //             if (err) {
-        //                 return console.error('error fetching client from pool', err);
-        //             }
-        //             client.query("UPDATE \"VIDEOS\" SET \"TIEUDE\" = '" + req.body.tieude + "', \"MOTA\" = '" + req.body.mota + "', \"KEY\" = '" + req.body.key + "', \"IMAGE\" = '" + req.file.originalname + "' WHERE \"ID\" = " + req.body.id, function (err, result) {
-        //                 //call `done()` to release the client back to the pool
-        //                 done();
+                        if (err) {
+                            return console.error('error running query', err);
+                        }
+                        res.redirect("../list");
+                        //output: 1
+                    });
+                });
+            } else {
+                pool.connect(function (err, client, done) {
+                    if (err) {
+                        return console.error('error fetching client from pool', err);
+                    }
+                    client.query("UPDATE \"VIDEOS\" SET \"TIEUDE\" = '" + req.body.tieude + "', \"MOTA\" = '" + req.body.mota + "', \"KEY\" = '" + req.body.key + "', \"IMAGE\" = '" + req.file.originalname + "' WHERE \"ID\" = " + req.body.id, function (err, result) {
+                        //call `done()` to release the client back to the pool
+                        done();
 
-        //                 if (err) {
-        //                     return console.error('error running query', err);
-        //                 }
-        //                 res.redirect("../list");
-        //                 //output: 1
-        //             });
-        //         });
-        //     }
+                        if (err) {
+                            return console.error('error running query', err);
+                        }
+                        res.redirect("../list");
+                        //output: 1
+                    });
+                });
+            }
 
-        //     // Everything went fine
-        // })
-        res.send("This is admin");
+            // Everything went fine
+        })
     } else if (req.session.roleid === 2) {
         res.redirect("../list");
     } else {

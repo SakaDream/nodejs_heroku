@@ -67,10 +67,6 @@ app.get("/videos/list", function (req, res) {
         properties.disabled = "";
         properties.name = "edit";
         properties.icon = "fa fa-edit";
-    } else if(req.session.roleid == undefined) {
-        res.send("roleid is undefined!");
-    } else {
-        res.send("Output: " + req.session.roleid);
     }
     pool.connect(function (err, client, done) {
         if (err) {

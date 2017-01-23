@@ -41,7 +41,7 @@
                                 <td><%= item.KEY %></td>
                                 <td><img src="../upload/<%= item.IMAGE %>" alt=""></td>
                                 <td><a href="edit/<%= item.ID %>"><span class="<%= properties.icon %>"><%= properties.name %></span></a> -
-                                    <a href="delete/<%= item.ID %>" onclick="confirm('Bạn có chắc muốn xoá không?')"><span class="fa fa-remove <%= properties.disabled %>">Delete</span></a></td>
+                                    <a class="<%= properties.disabled %>" href="delete/<%= item.ID %>" onclick="confirm('Bạn có chắc muốn xoá không?')"><span class="fa fa-remove">Delete</span></a></td>
                             </tr>
                         <% }) %>
                     </tbody>

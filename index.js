@@ -102,6 +102,10 @@ app.get("/videos/delete/:id", function (req, res) {
     });
 });
 
+app.get("/videos/add", function(req, res) {
+    res.send("add");
+});
+
 app.post("/videos/add", urlencodedParser, function (req, res) {
     upload(req, res, function (err) {
         if (err) {

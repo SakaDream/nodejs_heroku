@@ -10,7 +10,7 @@ var cookie = require("cookie-parser");
 app.use(express.static("public"));
 app.use(bodyParser.json());
 app.use(validator());
-app.use(session({ secret: 'user', saveUninitialized: false, resave: false, cookie:{maxAge: 15 * 60 * 1000}}));
+app.use(session({ secret: 'user', saveUninitialized: false, resave: false, cookie: { maxAge: 15 * 60 * 1000 } }));
 app.set("view engine", "ejs");
 app.set("views", "./views");
 app.set("hidden", "hidden");
@@ -63,7 +63,7 @@ app.get("/videos/list", function (req, res) {
         name: "view",
         icon: "fa fa-eye"
     }
-    if(req.session.roleid === 1) {
+    if (req.session.roleid === 1) {
         properties.name = "edit";
         properties.icon = "fa fa-edit";
     }
@@ -146,6 +146,14 @@ app.post("/videos/add", function (req, res) {
 // });
 
 app.get("/videos/edit/:id", function (req, res) {
+    var properties = {
+        disabled: "disabled",
+        name: "Back to List"
+    }
+    if (req.session.roleid === 1) {
+        properties.disabled = "";
+        properties.name = "Submit";
+    }
     pool.connect(function (err, client, done) {
         if (err) {
             return console.error('error fetching client from pool', err);
@@ -157,60 +165,64 @@ app.get("/videos/edit/:id", function (req, res) {
             if (err) {
                 return console.error('error running query', err);
             }
-            res.render("edit", { data: result.rows[0] });
+            res.render("edit", { data: result.rows[0], properties: properties });
             //output: 1
         });
     });
 });
 
 //post method in edit return to list (login coming soon)
-app.post("/videos/edit/:id", function (req, res) {
-    res.redirect("../list");
+
+app.post("/videos/edit/:id", urlencodedParser, function (req, res) {
+    if (req.session.roleid === 1) {
+        // upload(req, res, function (err) {
+        //     if (err) {
+        //         // An error occurred when uploading
+        //         res.send("Error when uploading file: " + err);
+        //     } else if (req.file == undefined) {
+        //         console.log(req.body.tieude + " " + req.body.mota + " " + req.body.key + " " + req.body.id);
+        //         pool.connect(function (err, client, done) {
+        //             if (err) {
+        //                 return console.error('error fetching client from pool', err);
+        //             }
+        //             client.query("UPDATE \"VIDEOS\" SET \"TIEUDE\" = '" + req.body.tieude + "', \"MOTA\" = '" + req.body.mota + "', \"KEY\" = '" + req.body.key + "' WHERE \"ID\" = " + req.body.id, function (err, result) {
+        //                 //call `done()` to release the client back to the pool
+        //                 done();
+
+        //                 if (err) {
+        //                     return console.error('error running query', err);
+        //                 }
+        //                 res.redirect("../list");
+        //                 //output: 1
+        //             });
+        //         });
+        //     } else {
+        //         pool.connect(function (err, client, done) {
+        //             if (err) {
+        //                 return console.error('error fetching client from pool', err);
+        //             }
+        //             client.query("UPDATE \"VIDEOS\" SET \"TIEUDE\" = '" + req.body.tieude + "', \"MOTA\" = '" + req.body.mota + "', \"KEY\" = '" + req.body.key + "', \"IMAGE\" = '" + req.file.originalname + "' WHERE \"ID\" = " + req.body.id, function (err, result) {
+        //                 //call `done()` to release the client back to the pool
+        //                 done();
+
+        //                 if (err) {
+        //                     return console.error('error running query', err);
+        //                 }
+        //                 res.redirect("../list");
+        //                 //output: 1
+        //             });
+        //         });
+        //     }
+
+        //     // Everything went fine
+        // })
+        res.send("This is admin");
+    } else if (req.session.roleid === 0) {
+        res.redirect("../list");
+    } else {
+        res.send("Something wrong...");
+    }
 });
-
-// app.post("/videos/edit/:id", urlencodedParser, function (req, res) {
-//     upload(req, res, function (err) {
-//         if (err) {
-//             // An error occurred when uploading
-//             res.send("Error when uploading file: " + err);
-//         } else if (req.file == undefined) {
-//             console.log(req.body.tieude + " " + req.body.mota + " " + req.body.key + " " + req.body.id);
-//             pool.connect(function (err, client, done) {
-//                 if (err) {
-//                     return console.error('error fetching client from pool', err);
-//                 }
-//                 client.query("UPDATE \"VIDEOS\" SET \"TIEUDE\" = '" + req.body.tieude + "', \"MOTA\" = '" + req.body.mota + "', \"KEY\" = '" + req.body.key + "' WHERE \"ID\" = " + req.body.id, function (err, result) {
-//                     //call `done()` to release the client back to the pool
-//                     done();
-
-//                     if (err) {
-//                         return console.error('error running query', err);
-//                     }
-//                     res.redirect("../list");
-//                     //output: 1
-//                 });
-//             });
-//         } else {
-//             pool.connect(function (err, client, done) {
-//                 if (err) {
-//                     return console.error('error fetching client from pool', err);
-//                 }
-//                 client.query("UPDATE \"VIDEOS\" SET \"TIEUDE\" = '" + req.body.tieude + "', \"MOTA\" = '" + req.body.mota + "', \"KEY\" = '" + req.body.key + "', \"IMAGE\" = '" + req.file.originalname + "' WHERE \"ID\" = " + req.body.id, function (err, result) {
-//                     //call `done()` to release the client back to the pool
-//                     done();
-
-//                     if (err) {
-//                         return console.error('error running query', err);
-//                     }
-//                     res.redirect("../list");
-//                     //output: 1
-//                 });
-//             });
-//         }
-
-//         // Everything went fine
-//     })
-// });
 
 app.get("/login", function (req, res) {
     var hiddenLG = 1;

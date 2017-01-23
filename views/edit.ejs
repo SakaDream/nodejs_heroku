@@ -19,11 +19,11 @@
                         <div class="form-group">
                             <input type="hidden" id="id" name="id" value="<%= data.ID %>">
                             <label for="">Tiêu Đề</label>
-                            <input type="text" class="form-control" id="tieude" name="tieude" value="<%= data.TIEUDE %>" placeholder="Tiêu đề của video"><br>
+                            <input type="text" class="form-control <%= properties.disabled %>" id="tieude" name="tieude" value="<%= data.TIEUDE %>" placeholder="Tiêu đề của video"><br>
                             <label for="">Mô Tả</label>
-                            <input type="text" class="form-control" id="mota" name="mota" value="<%= data.MOTA %>" placeholder="Mô tả của video"><br>
+                            <input type="text" class="form-control <%= properties.disabled %>" id="mota" name="mota" value="<%= data.MOTA %>" placeholder="Mô tả của video"><br>
                             <label for="">Key</label>
-                            <input type="text" class="form-control" id="key" name="key" value="<%= data.KEY %>" placeholder="id của video trên Vimeo"><br>
+                            <input type="text" class="form-control <%= properties.disabled %>" id="key" name="key" value="<%= data.KEY %>" placeholder="id của video trên Vimeo"><br>
                             <div class="form-group row">
                                 <div class="col-md-6">
                                     <label for="" class="btn btn-default btn-file">Ảnh Cũ:</label><br>
@@ -31,11 +31,11 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label for="" class="btn btn-default btn-file">Ảnh Mới:</label><br>
-                                    <input type="file" class="form-control" id="image" name="image" placeholder="Ảnh của video">
+                                    <input type="file" class="form-control <%= properties.disabled %>" id="image" name="image" placeholder="Ảnh của video">
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary"><%= properties.name %>></button>
                     </form>
                 </div>
             </div>

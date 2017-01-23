@@ -59,12 +59,11 @@ app.get("/", function (req, res) {
 
 app.get("/videos/list", function (req, res) {
     var properties = {
-        disabled: "disable-link",
+        roleid: req.session.roleid,
         name: "view",
         icon: "fa fa-eye"
     }
     if(req.session.roleid === 1) {
-        properties.disabled = "";
         properties.name = "edit";
         properties.icon = "fa fa-edit";
     }

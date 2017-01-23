@@ -217,7 +217,7 @@ app.post("/videos/edit/:id", urlencodedParser, function (req, res) {
         //     // Everything went fine
         // })
         res.send("This is admin");
-    } else if (req.session.roleid === 0) {
+    } else if (req.session.roleid === 2) {
         res.redirect("../list");
     } else {
         res.send("Something wrong...");

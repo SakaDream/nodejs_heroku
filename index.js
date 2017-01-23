@@ -70,7 +70,7 @@ app.get("/videos/list", function (req, res) {
     } else if(req.session.roleid === undefined) {
         res.send("roleid is undefined!");
     } else {
-        res.send("Unknown problem");
+        res.send("Output: " + req.session.roleid);
     }
     pool.connect(function (err, client, done) {
         if (err) {

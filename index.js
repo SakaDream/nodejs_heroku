@@ -58,6 +58,16 @@ app.get("/", function (req, res) {
 });
 
 app.get("/videos/list", function (req, res) {
+    var properties = {
+        disabled: "disabled",
+        name: "view",
+        icon: "fa fa-eye"
+    }
+    if(req.session.roleid === 1) {
+        properties.disabled = "";
+        properties.name = "edit";
+        properties.icon = "fa fa-edit";
+    }
     pool.connect(function (err, client, done) {
         if (err) {
             return console.error('error fetching client from pool', err);
@@ -69,7 +79,7 @@ app.get("/videos/list", function (req, res) {
             if (err) {
                 return console.error('error running query', err);
             }
-            res.render("list", { data: result });
+            res.render("list", { data: result, properties: properties });
             //output: 1
         });
     });
@@ -240,8 +250,7 @@ app.post("/login", urlencodedParser, function (req, res) {
                     var session = req.session;
                     session.username = username;
                     session.roleid = RroleId;
-                    return res.end("Your roleid is: " + session.roleid);
-                    //return res.redirect("/videos/list");
+                    return res.redirect("/videos/list");
                 } else {
                     error = 'Mật khẩu không đúng';
                     return res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });

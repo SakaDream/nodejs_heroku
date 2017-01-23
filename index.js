@@ -103,7 +103,7 @@ app.get("/videos/delete/:id", function (req, res) {
 });
 
 app.get("/videos/add", function(req, res) {
-    res.send("add");
+    res.render("add");
 });
 
 app.post("/videos/add", urlencodedParser, function (req, res) {

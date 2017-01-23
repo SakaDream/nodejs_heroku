@@ -10,7 +10,7 @@ var cookie = require("cookie-parser");
 app.use(express.static("public"));
 app.use(bodyParser.json());
 app.use(validator());
-app.use(session({ secret: 'user', saveUninitialized: false, resave: false }));
+app.use(session({ secret: 'user', saveUninitialized: false, resave: false, cookie:{maxAge: 15 * 60 * 1000}}));
 app.set("view engine", "ejs");
 app.set("views", "./views");
 app.set("hidden", "hidden");

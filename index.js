@@ -60,11 +60,11 @@ app.get("/", function (req, res) {
 app.get("/videos/list", function (req, res) {
     var properties = {
         roleid: req.session.roleid,
-        name: "view",
+        name: "View",
         icon: "fa fa-eye"
     }
     if (req.session.roleid === 1) {
-        properties.name = "edit";
+        properties.name = "Edit";
         properties.icon = "fa fa-edit";
     }
     pool.connect(function (err, client, done) {

@@ -249,7 +249,7 @@ app.post("/login", urlencodedParser, function (req, res) {
             if (err) {
                 return console.error('error running query', err);
             }
-            if (password == undefined) {
+            if (result === undefined) {
                 error = 'Username không tồn tại';
                 return res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
             } else {

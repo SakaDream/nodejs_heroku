@@ -237,7 +237,7 @@ app.post("/login", urlencodedParser, function (req, res) {
 
                 if (Rpassword.toString().trim() === passCrypt.toString().trim()) {
                     req.session.name = username;
-                    res.send("Session set: " + req.session.name);
+                    res.send("Session set: " + req.session.name + " ,expires in: " + req.session.cookie.maxAge / 1000 + "s");
                     //return res.redirect("/videos/list");
                 } else {
                     error = 'Mật khẩu không đúng';

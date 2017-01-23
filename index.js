@@ -63,7 +63,7 @@ app.get("/videos/list", function (req, res) {
         name: "view",
         icon: "fa fa-eye"
     }
-    if(req.session.roleid == 1) {
+    if(req.session.roleid === 1) {
         properties.disabled = "";
         properties.name = "edit";
         properties.icon = "fa fa-edit";
@@ -249,7 +249,7 @@ app.post("/login", urlencodedParser, function (req, res) {
                 if (Rpassword.toString().trim() === passCrypt.toString().trim()) {
                     var session = req.session;
                     session.username = username;
-                    session.roleid = RroleId;
+                    session.roleid = parseInt(RroleId);
                     return res.redirect("/videos/list");
                 } else {
                     error = 'Mật khẩu không đúng';

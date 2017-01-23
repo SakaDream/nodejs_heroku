@@ -249,12 +249,12 @@ app.post("/login", urlencodedParser, function (req, res) {
             if (err) {
                 return console.error('error running query', err);
             }
-            var Rpassword = result.rows[0].PASSWORD;
-            var RroleId = result.rows[0].ROLEID;
             if (password == undefined) {
                 error = 'Username không tồn tại';
                 return res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
             } else {
+                var Rpassword = result.rows[0].PASSWORD;
+                var RroleId = result.rows[0].ROLEID;
                 var passCrypt = require('crypto').createHash('md5').update(password).digest('hex');
 
                 if (Rpassword.toString().trim() === passCrypt.toString().trim()) {

@@ -236,8 +236,8 @@ app.post("/login", urlencodedParser, function (req, res) {
                 var passCrypt = require('crypto').createHash('md5').update(password).digest('hex');
 
                 if (Rpassword.toString().trim() === passCrypt.toString().trim()) {
-                    res.session.name = username;
-                    res.send("Session set: " + res.session.name);
+                    req.session.name = username;
+                    res.send("Session set: " + req.session.name);
                     //return res.redirect("/videos/list");
                 } else {
                     error = 'Mật khẩu không đúng';

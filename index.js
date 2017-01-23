@@ -221,7 +221,7 @@ app.post("/login", urlencodedParser, function (req, res) {
         if (err) {
             return console.error('error fetching client from pool', err);
         }
-        client.query("SELECT \"PASSWORD\" FROM \"USERS\" WHERE \"USERNAME\" LIKE '" + username + "'", function (err, result) {
+        client.query("SELECT \"PASSWORD\" , \"ROLEID\" FROM \"USERS\" WHERE \"USERNAME\" LIKE '" + username + "'", function (err, result) {
             //call `done()` to release the client back to the pool
             done();
 
@@ -229,6 +229,7 @@ app.post("/login", urlencodedParser, function (req, res) {
                 return console.error('error running query', err);
             }
             var Rpassword = result.rows[0].PASSWORD;
+            var RroleId = result.rows[0].USERNAME;
             if (password == undefined) {
                 error = 'Username không tồn tại';
                 return res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
@@ -236,8 +237,10 @@ app.post("/login", urlencodedParser, function (req, res) {
                 var passCrypt = require('crypto').createHash('md5').update(password).digest('hex');
 
                 if (Rpassword.toString().trim() === passCrypt.toString().trim()) {
-                    req.session.name = username;
-                    res.send("Session set: " + req.session.name + " ,expires in: " + req.session.cookie.maxAge / 1000 + "s");
+                    var session = req.session;
+                    session.username = username;
+                    session.roleid = RroleId;
+                    return res.end("Your roleid is: " + session.roleid);
                     //return res.redirect("/videos/list");
                 } else {
                     error = 'Mật khẩu không đúng';

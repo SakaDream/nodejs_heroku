@@ -11,7 +11,7 @@ app.use(express.static("public"));
 app.use(bodyParser.json());
 app.use(validator());
 app.use(session({ secret: 'user', saveUninitialized: false, resave: false, cookie: { maxAge: 15 * 60 * 1000 } }));
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.locals.session = req.session;
     next();
 });
@@ -62,30 +62,34 @@ app.get("/", function (req, res) {
 });
 
 app.get("/videos/list", function (req, res) {
-    var properties = {
-        roleid: req.session.roleid,
-        name: "View",
-        icon: "fa fa-eye"
-    }
-    if (req.session.roleid === 1) {
-        properties.name = "Edit";
-        properties.icon = "fa fa-edit";
-    }
-    pool.connect(function (err, client, done) {
-        if (err) {
-            return console.error('error fetching client from pool', err);
+    if (req.session === undefined) {
+        res.redirect("./login");
+    } else {
+        var properties = {
+            roleid: req.session.roleid,
+            name: "View",
+            icon: "fa fa-eye"
         }
-        client.query('SELECT * FROM "VIDEOS"', function (err, result) {
-            //call `done()` to release the client back to the pool
-            done();
-
+        if (req.session.roleid === 1) {
+            properties.name = "Edit";
+            properties.icon = "fa fa-edit";
+        }
+        pool.connect(function (err, client, done) {
             if (err) {
-                return console.error('error running query', err);
+                return console.error('error fetching client from pool', err);
             }
-            res.render("list", { data: result, properties: properties });
-            //output: 1
+            client.query('SELECT * FROM "VIDEOS"', function (err, result) {
+                //call `done()` to release the client back to the pool
+                done();
+
+                if (err) {
+                    return console.error('error running query', err);
+                }
+                res.render("list", { data: result, properties: properties });
+                //output: 1
+            });
         });
-    });
+    }
 });
 
 app.get("/videos/delete/:id", function (req, res) {
@@ -106,7 +110,7 @@ app.get("/videos/delete/:id", function (req, res) {
     });
 });
 
-app.get("/videos/add", function(req, res) {
+app.get("/videos/add", function (req, res) {
     res.render("add");
 });
 

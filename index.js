@@ -11,6 +11,10 @@ app.use(express.static("public"));
 app.use(bodyParser.json());
 app.use(validator());
 app.use(session({ secret: 'user', saveUninitialized: false, resave: false, cookie: { maxAge: 15 * 60 * 1000 } }));
+app.use(function(req, res, next) {
+    res.locals.session = req.session;
+    next();
+});
 app.set("view engine", "ejs");
 app.set("views", "./views");
 app.set("hidden", "hidden");

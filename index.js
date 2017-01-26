@@ -248,7 +248,7 @@ app.post("/login", urlencodedParser, function (req, res) {
                     var session = req.session;
                     session.username = username;
                     session.roleid = parseInt(RroleId);
-                    return res.redirect("/videos/list", {session: session});
+                    return res.redirect("/videos/list");
                 } else {
                     error = 'Mật khẩu không đúng';
                     return res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });

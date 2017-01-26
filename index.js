@@ -258,9 +258,6 @@ app.post("/login", urlencodedParser, function (req, res) {
                     session.username = username;
                     session.email = Remail;
                     session.roleid = parseInt(RroleId);
-                    store.set(req.session.id, session, function(error){
-                        console.log(error);
-                    });
                     return res.redirect("/videos/list");
                 } else {
                     error = 'Mật khẩu không đúng';
@@ -273,10 +270,9 @@ app.post("/login", urlencodedParser, function (req, res) {
 });
 
 app.get("logout", function(req, res){
-    store.destroy(req.session.id, function(error){
-        console.log(error);
+    req.session.destroy(function(err){
+        console.log(err);
     });
-    res.render("login");
 });
 
 app.post("/register", urlencodedParser, function (req, res) {

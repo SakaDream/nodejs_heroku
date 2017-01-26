@@ -277,7 +277,7 @@ app.get("/logout", function(req, res){
     var hiddenSU = 0;
     var error = '';
     var flag = '0';
-    res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
+    res.redirect("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
 });
 
 app.post("/register", urlencodedParser, function (req, res) {

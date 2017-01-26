@@ -233,7 +233,7 @@ app.post("/login", urlencodedParser, function (req, res) {
         if (err) {
             return console.error('error fetching client from pool', err);
         }
-        client.query("SELECT \"PASSWORD\" , \"ROLEID\" FROM \"USERS\" WHERE \"USERNAME\" LIKE '" + username + "'", function (err, result) {
+        client.query("SELECT \"PASSWORD\" , \"EMAIL\" , \"ROLEID\" FROM \"USERS\" WHERE \"USERNAME\" LIKE '" + username + "'", function (err, result) {
             //call `done()` to release the client back to the pool
             done();
 
@@ -245,12 +245,14 @@ app.post("/login", urlencodedParser, function (req, res) {
                 return res.render("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
             } else {
                 var Rpassword = result.rows[0].PASSWORD;
+                var Remail = result.rows[0].EMAIL;
                 var RroleId = result.rows[0].ROLEID;
                 var passCrypt = require('crypto').createHash('md5').update(password).digest('hex');
 
                 if (Rpassword.toString().trim() === passCrypt.toString().trim()) {
                     var session = req.session;
                     session.username = username;
+                    session.email = email;
                     session.roleid = parseInt(RroleId);
                     return res.redirect("/videos/list");
                 } else {

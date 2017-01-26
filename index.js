@@ -63,7 +63,7 @@ app.get("/", function (req, res) {
 
 app.get("/videos/list", function (req, res) {
     if (req.session.username === undefined) {
-        res.redirect("./login");
+        res.redirect("../login");
     } else {
         var properties = {
             roleid: req.session.roleid,

@@ -273,11 +273,7 @@ app.get("/logout", function(req, res){
     req.session.destroy(function(err){
         console.log(err);
     });
-    var hiddenLG = 0;
-    var hiddenSU = 0;
-    var error = '';
-    var flag = '0';
-    res.redirect("login", { hiddenLG: hiddenLG, hiddenSU: hiddenSU, error: error });
+    res.redirect("login");
 });
 
 app.post("/register", urlencodedParser, function (req, res) {

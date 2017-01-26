@@ -273,6 +273,7 @@ app.get("logout", function(req, res){
     req.session.destroy(function(err){
         console.log(err);
     });
+    res.render("login");
 });
 
 app.post("/register", urlencodedParser, function (req, res) {

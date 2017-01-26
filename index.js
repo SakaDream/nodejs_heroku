@@ -269,7 +269,7 @@ app.post("/login", urlencodedParser, function (req, res) {
     });
 });
 
-app.get("logout", function(req, res){
+app.get("/logout", function(req, res){
     req.session.destroy(function(err){
         console.log(err);
     });

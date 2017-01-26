@@ -252,7 +252,7 @@ app.post("/login", urlencodedParser, function (req, res) {
                 if (Rpassword.toString().trim() === passCrypt.toString().trim()) {
                     var session = req.session;
                     session.username = username;
-                    session.email = email;
+                    session.email = Remail;
                     session.roleid = parseInt(RroleId);
                     return res.redirect("/videos/list");
                 } else {

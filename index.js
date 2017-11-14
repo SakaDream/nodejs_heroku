@@ -21,10 +21,10 @@ app.set("hidden", "hidden");
 app.listen(process.env.PORT || 3000);
 
 var config = {
-    user: 'nfoelcoksqmjso', //env var: PGUSER
-    database: 'd4hosncueggf6l', //env var: PGDATABASE
-    password: '06f1a8a58ff9288bfa747d8f93118ee740a83834f666b9d3934bdb35d3df0883', //env var: PGPASSWORD
-    host: 'ec2-54-163-240-7.compute-1.amazonaws.com', // Server hosting the postgres database
+    user: process.env.USER, //env var: PGUSER
+    database: process.env.DATABASE, //env var: PGDATABASE
+    password: process.env.PASSWORD, //env var: PGPASSWORD
+    host: process.env.HOST, // Server hosting the postgres database
     port: 5432, //env var: PGPORT
     max: 10, // max number of clients in the pool
     idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
